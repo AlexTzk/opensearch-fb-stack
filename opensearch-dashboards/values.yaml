@@ -1,0 +1,10 @@
+ingress:
+  enabled: true
+  hosts:
+    - host: os.mydomain.com
+      paths:
+        - path: /
+  tls:
+   - secretName: some-tls
+     hosts:
+       - os.mydomain.com

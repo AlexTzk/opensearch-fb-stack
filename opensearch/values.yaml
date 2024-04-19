@@ -1,0 +1,16 @@
+clusterName: "opensearch-cluster"
+nodeGroup: "master"
+masterService: "opensearch-cluster-master"
+replicas: 3 
+extraEnvs:
+   - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+     valueFrom:
+       secretKeyRef:
+         name: os-admin-credentials
+         key: password
+persistence:
+  enabled: true
+  accessModes:
+    - ReadWriteOnce
+  storageClass: "standard-rwo"
+  size: 100Gi
