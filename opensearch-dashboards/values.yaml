@@ -8,3 +8,25 @@ ingress:
    - secretName: some-tls
      hosts:
        - os.mydomain.com
+extraEnvs:
+   - name: CLIENT_ID
+     valueFrom:
+       secretKeyRef:
+         name: os-client-id
+         key: client-id
+   - name: CLIENT_SECRET
+     valueFrom:
+       secretKeyRef:
+         name: os-client-secret
+         key: client-secret
+config:
+  opensearch_dashboards.yml: |
+    opensearch.ssl.verificationMode: none
+    opensearch.username: kibanaserver
+    opensearch.password: kibanaserver
+    opensearch_security.auth.multiple_auth_enabled: true
+    opensearch_security.auth.type: ["openid","basicauth"]
+    opensearch_security.openid.base_redirect_url: "https://os.mydomain.com"
+    opensearch_security.openid.connect_url: "https://login.microsoftonline.com/<TENANT_ID>/v2.0/.well-known/openid-configuration"
+    opensearch_security.openid.client_id: ${CLIENT_ID}
+    opensearch_security.openid.client_secret: ${CLIENT_SECRET}
