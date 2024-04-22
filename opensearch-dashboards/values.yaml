@@ -8,3 +8,12 @@ ingress:
    - secretName: some-tls
      hosts:
        - os.mydomain.com
+config:
+  opensearch_dashboards.yml: |
+    opensearch.ssl.verificationMode: none
+    opensearch.username: kibanaserver
+    opensearch.password: kibanaserver
+    opensearch_security.auth.multiple_auth_enabled: true
+    opensearch_security.auth.type: ["saml","basicauth"]
+    opensearch.requestHeadersWhitelist: [authorization, securitytenant]
+    server.xsrf.allowlist: ["/_opendistro/_security/saml/acs/idpinitiated","/_opendistro/_security/saml/acs", "/_opendistro/_security/saml/logout"]
